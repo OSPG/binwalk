@@ -1,7 +1,74 @@
-# WAV files
+# WAV audio
 # by Folkert van Heusden <mail@vanheusden.com>
-0       string  RIFF        RIFF data
->4      lelong  x           size - 8 bytes: %d
->8      string  WAVE        .WAV
+0       string      RIFF       RIFF audio data
+>4      ulelong+8   x          {size: %d}
+>8      string      !WAVE      {invalid}
+>8      string      WAVE       (WAV),
+>4      ulelong+8   x          {size: %d}
+>20     uleshort    1          PCM,
+>20     uleshort    3          IEEE float,
+>20     uleshort    6          8-bit ITU-T G.711 A-law,
+>20     uleshort    7          8-bit ITU-T G.711 u-law,
+>20     uleshort    0xFFFE     subFormat,
+>22     uleshort    x          %d channels,
+>24     ulelong     x          %d sample rate
 
-0       string  fLaC        FLAC data
+# MP3 ID3 tag
+0       string      ID3        MP3 ID3 tag,
+>3      ubyte       0x02       v2.2
+>3      ubyte       0x03       v2.3
+>3      ubyte       0x04       v2.4
+>4      ubyte       !0x00      {invalid}
+
+# MP3 audio
+# There is no unique magic number.
+# refer to http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html
+
+# FLAC audio
+0       string      fLaC       FLAC audio data,
+>18     ulong>>12   x          %dHz
+
+# OGG audio
+0       string      OggS       OGG audio data
+
+# AIFF audio
+0       string      FORM       AIFF audio data
+>4      ulong+8     x          {size: %d}
+>8      string      !AIFF      {invalid}
+
+# AU audio
+0       string      .snd       AU audio data,
+>16     ulong       x          %d sample rate,
+>20     ulong       x          %d channels
+
+# WMA audio
+0       string      \x30\x26\xB2\x75\x8E\x66     WMA audio data
+
+# SoundFont 2.0 audio
+0       string      RIFF       RIFF audio data
+>4      ulelong+8   x          {size: %d}
+>8      string      !sfbk      {invalid}
+>8      string      sfbk       (SoundFont 2.0)
+
+# MIDI sequence
+0       string      MThd       MIDI sequence data,
+>8      ushort      x          %d format,
+>10     ushort      x          %d tracks
+>14     string      !MTrk      {invalid}
+
+# RIFF MIDI sequence
+0       string      RIFF       RIFF audio data
+>4      ulelong+8   x          {size: %d}
+>8      string      !RMID      {invalid}
+>8      string      RMID       (RIFF MIDI)
+
+# MLD sequence
+0       string      melo       MLD sequence date,
+>4      ulong+8     x          {size: %d}
+>12     ubyte       =1         4 chords(MFi)
+>12     ubyte       =2         8 chords(MFi2)
+>12     ubyte       =4         16 chords(MFi2)
+
+# MMF sequence
+0       string      MMMD       MMF sequence date
+>4      ulong+10    x          {size: %d}
