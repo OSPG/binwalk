@@ -30,6 +30,7 @@
 
 # OGG audio
 0       string      OggS       OGG audio data
+>5      ubyte       !0x02      {invalid}
 
 # AIFF audio
 0       string      FORM       AIFF audio data
