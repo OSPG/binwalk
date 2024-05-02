@@ -23,3 +23,7 @@ class IgnoreFileException(Exception):
     should be ignored.
     '''
     pass
+
+
+class ExtractNotAvail(Exception):
+    pass

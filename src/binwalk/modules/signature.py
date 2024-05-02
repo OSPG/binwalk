@@ -2,6 +2,7 @@
 # of binwalk.
 import binwalk.core.magic
 from binwalk.core.module import Module, Option, Kwarg
+from binwalk.core.exceptions import ExtractNotAvail
 
 
 class Signature(Module):
@@ -137,6 +138,8 @@ class Signature(Module):
         self.one_of_many = None
         self.magic.reset()
 
+        extract_exception = None
+
         while True:
             (data, dlen) = fp.read_block()
             if dlen < 1:
@@ -168,7 +171,10 @@ class Signature(Module):
                 # Register the result for futher processing/display
                 # self.result automatically calls self.validate for result
                 # validation
-                self.result(r=r)
+                try:
+                    self.result(r=r)
+                except ExtractNotAvail as e:
+                    extract_exception = e
 
                 # If a sigure specified the end tag, jump to the end of the file
                 if r.end == True:
@@ -186,6 +192,9 @@ class Signature(Module):
                         fp.seek(r.offset + r.jump)
                         break
 
+        if extract_exception:
+            binwalk.core.common.warning("One or more files failed to extract: {}".format(extract_exception))
+        
     def run(self):
         for fp in iter(self.next_file, None):
             self.header()

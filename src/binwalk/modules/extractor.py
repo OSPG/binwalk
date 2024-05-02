@@ -16,7 +16,7 @@ import shlex
 import tempfile
 import subprocess
 import binwalk.core.common
-from binwalk.core.exceptions import ModuleException
+from binwalk.core.exceptions import ModuleException, ExtractNotAvail
 from binwalk.core.module import Module, Option, Kwarg
 from binwalk.core.common import file_size, file_md5, unique_file_name, BlockFile
 from binwalk.core.compat import str2bytes
@@ -332,6 +332,8 @@ class Extractor(Module):
                 # Update the last directory listing for the next time we
                 # extract a file to this same output directory
                 self.last_directory_listing[extraction_directory] = directory_listing
+            elif self.enabled:
+                raise ExtractNotAvail("either no utility was found or it's unimplemented")
 
     def append_rule(self, r):
         self.extract_rules.append(r.copy())
