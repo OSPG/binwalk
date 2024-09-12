@@ -62,6 +62,9 @@ class SignatureLine(object):
         self.text = line
         self.regex = False
 
+        # Unescape `#`
+        line = line.replace('\\#', '#')
+
         # Split the line on any white space; for this to work, backslash-escaped
         # spaces ('\ ') are replaced with their escaped hex value ('\x20').
         #
@@ -435,6 +438,8 @@ class Magic(object):
         self.fmtstr = re.compile("%[^%]")
         # Regex rule to find periods (see self._do_math)
         self.period = re.compile(r"\.")
+        # Regex rule to strip comments
+        self.comment = re.compile(r"^#|[^\\]#")
 
     def reset(self):
         self.display_once = set()
@@ -888,9 +893,8 @@ class Magic(object):
         signature = None
 
         for line in lines:
-            # Split at the first comment delimiter (if any) and strip the
-            # result
-            line = line.split('#')[0].strip()
+            # Split at the first comment delimiter (if any) and strip the result
+            line = re.split(self.comment, line)[0].strip()
             # Ignore blank lines and lines that are nothing but comments.
             # We also don't support the '!mime' style line entries.
             if line and line[0] != '!':
