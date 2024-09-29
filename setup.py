@@ -12,18 +12,12 @@ MODULE_VERSION = "2.4.2"
 SCRIPT_NAME = MODULE_NAME
 MODULE_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
-# Python3 has a built-in DEVNULL; for Python2, we have to open
-# os.devnull to redirect subprocess stderr output to the ether.
-try:
-    from subprocess import DEVNULL
-except ImportError:
-    DEVNULL = open(os.devnull, 'wb')
-
 # If this version of binwalk was checked out from the git repository,
 # include the git commit hash as part of the version number reported
 # by binwalk.
 try:
-    label = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], stderr=DEVNULL).decode('utf-8')
+    label = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"],
+                                    stderr=subprocess.DEVNULL).decode('utf-8')
     MODULE_VERSION = "%s+%s" % (MODULE_VERSION, label.strip())
 except KeyboardInterrupt:
     raise

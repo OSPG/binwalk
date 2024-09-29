@@ -1,11 +1,3 @@
-import sys
-import string
-
-PY_MAJOR_VERSION = sys.version_info[0]
-
-if PY_MAJOR_VERSION > 2:
-    string.letters = string.ascii_letters
-
 
 def str2bytes(string):
     if isinstance(string, str):
