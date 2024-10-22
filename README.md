@@ -8,7 +8,7 @@ Binwalk is a fast, easy to use tool for analyzing, reverse engineering, and extr
 
 ### Binwalkv3
 
-Original binwalk authors started to rewrite it to rust. For now it's unstable/experimental but it comes with multiple improvements. See https://github.com/ReFirmLabs/binwalk/tree/binwalkv3 for more information.
+Original binwalk authors started to rewrite it to rust. For now it's unstable/experimental but it comes with multiple improvements. See https://github.com/ReFirmLabs/binwalk for more information.
 
 ### Important notice
 
