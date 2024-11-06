@@ -6,9 +6,13 @@
 
 Binwalk is a fast, easy to use tool for analyzing, reverse engineering, and extracting firmware images.
 
-### Binwalkv3
+### EOL notice
 
-Original binwalk authors started to rewrite it to rust. For now it's unstable/experimental but it comes with multiple improvements. See https://github.com/ReFirmLabs/binwalk for more information.
+This fork was born to fix some outsanding issues with binwalk v2 and generally to keep it in good shape. It served his purpose helping users and distro packagers alike. However, given the original author recently rewrote binwalk in rust and is in active development again, there is no need to maintain binwalk v2 anymore. Users and contributors should migrate to binwalk v3. This new version also provides a library in Rust, see https://github.com/ReFirmLabs/binwalk/wiki/Using-the-Rust-Library.
+
+As a result, **this repository will effectively be EOL at 12/12/2025**, at which point this repository may be archived or removed.
+
+-----
 
 ### Important notice
 

@@ -777,6 +777,8 @@ class Modules(object):
                     fmt = "    %%s %%s%%-%ds%%s\n" % (25 - len(long_opt))
                     help_string += fmt % (short_opt, long_opt, optargs, module_option.description)
 
+        help_string += "\n[NOTICE] Binwalk v2.x will reach EOL in 12/12/2025. Please migrate to binwalk v3.x"
+
         return help_string + "\n"
 
     def execute(self, *args, **kwargs):
